@@ -24,8 +24,8 @@ class RoleSelectionScreen extends StatelessWidget {
             const SizedBox(height: 24),
             Expanded(
               child: Center(
-                child: Image.asset(
-                  'assets/images/role_selection.png', // صورة الشخص اللي ماسك موبايل
+                child: Image.network(
+                  'https://cdn-icons-png.flaticon.com/512/7011/7011960.png',
                   height: 220,
                 ),
               ),
