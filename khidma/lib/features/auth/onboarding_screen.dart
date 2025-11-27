@@ -12,8 +12,8 @@ class OnboardingScreen extends StatelessWidget {
       body: Stack(
         fit: StackFit.expand,
         children: [
-          Image.asset(
-            'assets/images/onboarding_bg.jpg', // حط أي صورة مؤقتًا
+          Image.network(
+            'https://images.pexels.com/photos/774095/pexels-photo-774095.jpeg?auto=compress&cs=tinysrgb&w=800',
             fit: BoxFit.cover,
           ),
           Container(color: Colors.black.withOpacity(0.35)),
