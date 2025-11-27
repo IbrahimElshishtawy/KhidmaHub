@@ -40,8 +40,8 @@ class AppRoutes {
   static const helperMissionTracking = '/helper-mission-tracking';
   static const earningsHistory = '/earnings-history';
 
-  static Route<dynamic> generateRoute(RouteSettings settings) {
-    switch (settings.name) {
+  static Route<dynamic> generateRoute(RouteSettings routeSettings) {
+    switch (routeSettings.name) {
       case onboarding:
         return MaterialPageRoute(builder: (_) => const OnboardingScreen());
       case roleSelection:
