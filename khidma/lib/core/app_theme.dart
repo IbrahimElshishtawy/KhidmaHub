@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 
 ThemeData buildLightTheme() {
-  const primaryColor = Color(0xFF0066FF); // الأزرق الموجود في التصميم
-
+  const primaryColor = Color(0xFF0066FF);
   final base = ThemeData.light(useMaterial3: true);
-
   return base.copyWith(
     primaryColor: primaryColor,
     scaffoldBackgroundColor: const Color(0xFFF5F5F5),
