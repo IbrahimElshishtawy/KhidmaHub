@@ -17,7 +17,6 @@ class KhidmaApp extends StatelessWidget {
       theme: buildLightTheme(),
       locale: const Locale('ar'),
       supportedLocales: const [Locale('ar'), Locale('en')],
-      // أول شاشة: الـ Onboarding
       initialRoute: AppRoutes.onboarding,
       onGenerateRoute: AppRoutes.generateRoute,
     );
