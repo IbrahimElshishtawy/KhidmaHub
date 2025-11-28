@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-// استيراد الشاشات
 import '../features/auth/onboarding_screen.dart';
 import '../features/auth/role_selection_screen.dart';
 import '../features/auth/customer_login_screen.dart';
@@ -24,7 +23,6 @@ class AppRoutes {
   static const roleSelection = '/role-selection';
   static const customerLogin = '/customer-login';
   static const helperLogin = '/helper-login';
-
   static const customerHome = '/customer-home';
   static const serviceDetails = '/service-details';
   static const searchingHelper = '/searching-helper';
@@ -34,7 +32,6 @@ class AppRoutes {
   static const payment = '/payment';
   static const customerProfile = '/customer-profile';
   static const settings = '/settings';
-
   static const helperHome = '/helper-home';
   static const jobDetails = '/job-details';
   static const helperMissionTracking = '/helper-mission-tracking';
