@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:khidma/features/customer/customer_home_screen/widget/buildAppBar.dart';
+import 'package:khidma/features/customer/customer_home_screen/HomeScreen.dart';
 import 'package:khidma/features/customer/customer_home_screen/widget/buildBottomNavigationBar.dart';
-import 'package:khidma/features/customer/customer_home_screen/widget/buildCategorySection.dart';
-import 'package:khidma/features/customer/customer_home_screen/widget/buildServiceList.dart';
+import 'package:khidma/features/customer/setting/settings_screen.dart';
 import 'package:khidma/models/service.dart';
-import '../../../mock/mock_data.dart';
-import '../../../core/app_routes.dart';
+import 'package:khidma/mock/mock_data.dart';
+import 'package:khidma/features/customer/customer_profile/customer_profile_screen.dart';
+import 'package:khidma/features/customer/customer_chat/customer_chat.dart';
+import 'package:khidma/features/customer/Tasks/TasksPage.dart';
 
 class CustomerHomeScreen extends StatefulWidget {
   const CustomerHomeScreen({super.key});
@@ -19,85 +20,25 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
   bool isSearching = false;
   TextEditingController searchController = TextEditingController();
   List<Service_model> filteredServices = mockServices.cast<Service_model>();
-
-  // Function to filter services based on search text
-  void _filterServices(String query) {
-    setState(() {
-      filteredServices = query.isEmpty
-          ? mockServices.cast<Service_model>()
-          : mockServices
-                .where(
-                  (serviceModel) =>
-                      serviceModel.title.toLowerCase().contains(
-                        query.toLowerCase(),
-                      ) ||
-                      serviceModel.description.toLowerCase().contains(
-                        query.toLowerCase(),
-                      ),
-                )
-                .cast<Service_model>()
-                .toList();
-    });
-  }
-
   // Function to handle the navigation
   void _onNavigationTapped(int index) {
     setState(() {
       currentIndex = index;
     });
-
-    switch (index) {
-      case 1:
-        Navigator.pushNamed(context, AppRoutes.customerProfile);
-        break;
-      case 2:
-        Navigator.pushNamed(context, AppRoutes.settings);
-        break;
-      case 3:
-        Navigator.pushNamed(
-          context,
-          AppRoutes.chats,
-        ); // Navigate to chat screen
-        break;
-      default:
-        break;
-    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(kToolbarHeight),
-        child: buildAppBar(
-          isSearching: isSearching,
-          searchController: searchController,
-          onSearchToggle: (bool isSearching) {
-            setState(() {
-              this.isSearching = isSearching;
-            });
-          },
-          onSearchChanged: _filterServices,
-          context: context,
-        ),
-      ),
-      body: GestureDetector(
-        onTap: () => FocusScope.of(
-          context,
-        ).requestFocus(FocusNode()), // Dismiss keyboard when tapping outside
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              buildCategorySection(),
-              const SizedBox(height: 16),
-              ServiceList(
-                filteredServices: filteredServices,
-              ), // Pass filtered services
-            ],
-          ),
-        ),
+      body: IndexedStack(
+        index: currentIndex, // Display content based on the selected tab
+        children: [
+          const ChatListPage(),
+          const TasksPage(),
+          const HomeScreen(),
+          const CustomerProfileScreen(),
+          const SettingsScreen(),
+        ],
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: currentIndex,
