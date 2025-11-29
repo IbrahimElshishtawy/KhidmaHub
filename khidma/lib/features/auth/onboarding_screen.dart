@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use, library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import '../../core/app_routes.dart'; // عدّل المسار لو احتجت
 
