@@ -10,15 +10,9 @@ class ChatListPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('الدردشات'),
-        backgroundColor: const Color(0xFF3B5998),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () {
-              // Handle search functionality if needed
-            },
-          ),
-        ],
+        backgroundColor: const Color.fromARGB(255, 246, 246, 246),
+        elevation: 1,
+        automaticallyImplyLeading: false,
       ),
       body: ListView.builder(
         itemCount: 10, // For demonstration, we assume 10 chat rooms
