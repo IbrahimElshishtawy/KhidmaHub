@@ -67,7 +67,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
           children: [
             buildCategorySection(),
             const SizedBox(height: 16),
-            servicelist(),
+            ServiceList(),
           ],
         ),
       ),
