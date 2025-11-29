@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 Widget buildHeader() {
   return Column(
-    crossAxisAlignment: CrossAxisAlignment.end,
+    crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Text(
         "خدمة",
@@ -15,7 +15,7 @@ Widget buildHeader() {
           fontWeight: FontWeight.bold,
         ),
       ),
-      const SizedBox(height: 6),
+      const SizedBox(height: 10),
       Text(
         "سجّل كمساعد وابدأ في استقبال الطلبات بسهولة",
         style: TextStyle(color: Colors.white.withOpacity(0.9), fontSize: 13),
