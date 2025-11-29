@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:khidma/features/customer/NotificationPage.dart';
 
-// Building the app bar, no back button for the Notifications page
 Widget buildAppBar({
   required BuildContext context,
   required bool isSearching,
@@ -13,27 +12,52 @@ Widget buildAppBar({
   bool isNotificationPage = false, // Check if the page is for notifications
 }) {
   return AppBar(
-    backgroundColor: const Color(0xFF3B5998),
+    backgroundColor: const Color.fromARGB(
+      255,
+      255,
+      255,
+      255,
+    ), // Keeping the original color
     automaticallyImplyLeading:
-        !isNotificationPage, // Remove back button for Notifications page
+        false, // Remove back button for Notifications page
+
+    elevation: 1, // Add elevation for a material design feel
     title: isSearching
-        ? TextField(
-            controller: searchController,
-            style: const TextStyle(color: Colors.white),
-            decoration: const InputDecoration(
-              hintText: 'ابحث عن خدمة...',
-              hintStyle: TextStyle(color: Colors.white70),
-              border: InputBorder.none,
+        ? AnimatedContainer(
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+            child: TextField(
+              controller: searchController,
+              style: const TextStyle(color: Colors.white),
+              onChanged: onSearchChanged,
+              decoration: const InputDecoration(
+                hintText: 'ابحث عن خدمة...',
+                hintStyle: TextStyle(color: Color.fromARGB(179, 0, 0, 0)),
+                border: InputBorder.none,
+              ),
             ),
           )
-        : const Text('الخدمات'),
+        : const Text(
+            'الخدمات',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ), // Styled title
+          ),
     actions: [
-      IconButton(
-        icon: const Icon(Icons.search),
-        onPressed: () {
-          onSearchToggle(!isSearching);
-        },
+      // Search Button with Animation on Press
+      AnimatedOpacity(
+        opacity: isSearching ? 0.5 : 1.0,
+        duration: const Duration(milliseconds: 300),
+        child: IconButton(
+          icon: const Icon(Icons.search),
+          onPressed: () {
+            onSearchToggle(!isSearching); // Toggle search mode
+          },
+        ),
       ),
+
+      // Notification Button
       IconButton(
         icon: const Icon(Icons.notifications_none),
         onPressed: () {
