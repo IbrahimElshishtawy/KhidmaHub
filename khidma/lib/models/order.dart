@@ -1,10 +1,10 @@
 class Order {
-  final String id;
-  final String title;
-  final String location;
-  final DateTime dateTime;
-  final double price;
-  final String status; // pending, accepted, in_progress, completed
+  String id;
+  String title;
+  String location;
+  DateTime dateTime;
+  double price;
+  String status; // يجب أن تكون قابلة للتغيير، لذا لا نستخدم final هنا.
 
   Order({
     required this.id,
