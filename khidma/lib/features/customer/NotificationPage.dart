@@ -1,7 +1,6 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:khidma/features/customer/customer_home_screen/widget/buildAppBar.dart';
 
 class NotificationPage extends StatelessWidget {
   const NotificationPage({super.key});
@@ -9,17 +8,17 @@ class NotificationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-          buildAppBar(
-                isSearching: false,
-                searchController: TextEditingController(),
-                onSearchToggle: (bool isSearching) {},
-                onSearchChanged: (String query) {},
-                isNotificationPage: true,
-                context:
-                    context, // Set the flag to true to hide the back button
-              )
-              as PreferredSizeWidget,
+      appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 65, 93, 155),
+        automaticallyImplyLeading: false, // Remove default back button
+        title: const Text('الإشعارات'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back), // Back arrow icon
+          onPressed: () {
+            Navigator.pop(context); // Pop the current screen to go back
+          },
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView(
@@ -44,11 +43,11 @@ class NotificationCard extends StatelessWidget {
   final String date;
 
   const NotificationCard({
-    Key? key,
+    super.key,
     required this.title,
     required this.message,
     required this.date,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
