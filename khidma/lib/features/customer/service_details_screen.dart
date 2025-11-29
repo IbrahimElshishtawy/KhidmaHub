@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import '../../models/service.dart';
-import '../../core/app_routes.dart';
+import 'package:khidma/core/app_routes.dart';
+import 'package:khidma/models/service.dart';
 
 class ServiceDetailsScreen extends StatelessWidget {
   const ServiceDetailsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final service = ModalRoute.of(context)!.settings.arguments as Service?;
+    final service =
+        ModalRoute.of(context)!.settings.arguments as Service_model?;
 
     return Scaffold(
       appBar: AppBar(
