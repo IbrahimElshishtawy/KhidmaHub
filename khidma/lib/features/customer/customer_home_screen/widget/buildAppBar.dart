@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:khidma/features/customer/NotificationPage.dart';
+import 'package:khidma/features/customer/Notification/NotificationPage.dart';
 
 Widget buildAppBar({
   required BuildContext context,
