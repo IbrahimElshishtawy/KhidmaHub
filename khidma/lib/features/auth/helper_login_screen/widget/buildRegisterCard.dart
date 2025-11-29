@@ -15,51 +15,78 @@ Widget buildRegisterCard(BuildContext context) {
         textAlign: TextAlign.right,
         style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700),
       ),
-
       const SizedBox(height: 16),
-
-      TextField(
-        controller: nameController,
-        textDirection: TextDirection.rtl,
-        decoration: const InputDecoration(
-          prefixIcon: Icon(Icons.person_outline),
-          labelText: "الاسم الكامل",
+      // Card for registration fields
+      ClipRRect(
+        borderRadius: BorderRadius.circular(16),
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                blurRadius: 8,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              TextField(
+                controller: nameController,
+                textDirection: TextDirection.rtl,
+                decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.person_outline),
+                  labelText: "الاسم الكامل",
+                ),
+              ),
+              const SizedBox(height: 12),
+              TextField(
+                controller: phoneController,
+                keyboardType: TextInputType.phone,
+                textDirection: TextDirection.rtl,
+                decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.phone_outlined),
+                  labelText: "رقم الهاتف",
+                ),
+              ),
+              const SizedBox(height: 12),
+              TextField(
+                controller: cityController,
+                textDirection: TextDirection.rtl,
+                decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.location_on_outlined),
+                  labelText: "المدينة",
+                ),
+              ),
+              const SizedBox(height: 18),
+              buildIdUploadBox(),
+            ],
+          ),
         ),
       ),
+      const SizedBox(height: 24),
 
-      const SizedBox(height: 12),
-
-      TextField(
-        controller: phoneController,
-        keyboardType: TextInputType.phone,
-        textDirection: TextDirection.rtl,
-        decoration: const InputDecoration(
-          prefixIcon: Icon(Icons.phone_outlined),
-          labelText: "رقم الهاتف",
-        ),
-      ),
-
-      const SizedBox(height: 12),
-
-      TextField(
-        controller: cityController,
-        textDirection: TextDirection.rtl,
-        decoration: const InputDecoration(
-          prefixIcon: Icon(Icons.location_on_outlined),
-          labelText: "المدينة",
-        ),
-      ),
-
-      const SizedBox(height: 18),
-
-      buildIdUploadBox(),
-
-      const SizedBox(height: 18),
-
+      // Button to submit registration
       SizedBox(
         height: 46,
         child: OutlinedButton(
           onPressed: () {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                closeIconColor: Colors.green,
+                content: Text(
+                  'تم إنشاء الحساب بنجاح!',
+                  style: TextStyle(fontSize: 16),
+                ),
+                duration: Duration(seconds: 2),
+              ),
+            );
+
+            // Optionally, navigate to the helper home screen after a successful registration
             Navigator.pushReplacementNamed(context, AppRoutes.helperHome);
           },
           style: OutlinedButton.styleFrom(
