@@ -20,8 +20,6 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
   TextEditingController searchController = TextEditingController();
   List<Service_model> filteredServices = mockServices
       .cast<Service_model>(); // List to hold filtered services
-
-  // Function to filter services based on search text
   void _filterServices(String query) {
     setState(() {
       if (query.isEmpty) {
@@ -61,17 +59,22 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
           context: context, // Adding the search functionality
         ),
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            buildCategorySection(),
-            const SizedBox(height: 16),
-            ServiceList(
-              filteredServices: filteredServices,
-            ), // Passing filtered services
-          ],
+      body: GestureDetector(
+        onTap: () => FocusScope.of(
+          context,
+        ).requestFocus(FocusNode()), // Dismiss keyboard when tapping outside
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              buildCategorySection(),
+              const SizedBox(height: 16),
+              ServiceList(
+                filteredServices: filteredServices, // Pass filtered services
+              ),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
@@ -84,6 +87,11 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
             Navigator.pushNamed(context, AppRoutes.customerProfile);
           } else if (index == 2) {
             Navigator.pushNamed(context, AppRoutes.settings);
+          } else if (index == 3) {
+            Navigator.pushNamed(
+              context,
+              AppRoutes.chats, // Navigate to chat screen
+            );
           }
         },
       ),
