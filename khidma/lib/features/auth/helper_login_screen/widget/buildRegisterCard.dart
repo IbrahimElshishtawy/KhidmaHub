@@ -69,8 +69,6 @@ Widget buildRegisterCard(BuildContext context) {
         ),
       ),
       const SizedBox(height: 24),
-
-      // Button to submit registration
       SizedBox(
         height: 46,
         child: OutlinedButton(
@@ -85,8 +83,6 @@ Widget buildRegisterCard(BuildContext context) {
                 duration: Duration(seconds: 2),
               ),
             );
-
-            // Optionally, navigate to the helper home screen after a successful registration
             Navigator.pushReplacementNamed(context, AppRoutes.helperHome);
           },
           style: OutlinedButton.styleFrom(
