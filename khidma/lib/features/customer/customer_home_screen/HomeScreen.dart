@@ -78,24 +78,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: CustomBottomNavigationBar(
-        currentIndex: currentIndex,
-        onTap: (index) {
-          setState(() {
-            currentIndex = index;
-          });
-          if (index == 1) {
-            Navigator.pushNamed(context, AppRoutes.customerProfile);
-          } else if (index == 2) {
-            Navigator.pushNamed(context, AppRoutes.settings);
-          } else if (index == 3) {
-            Navigator.pushNamed(
-              context,
-              AppRoutes.chats, // Navigate to chat screen
-            );
-          }
-        },
-      ),
     );
   }
 }
