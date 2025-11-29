@@ -7,6 +7,7 @@ late TextEditingController passwordController;
 Widget buildLoginCard(BuildContext context) {
   emailController = TextEditingController();
   passwordController = TextEditingController();
+
   return Column(
     crossAxisAlignment: CrossAxisAlignment.stretch,
     children: [
@@ -70,6 +71,12 @@ Widget buildLoginCard(BuildContext context) {
         height: 46,
         child: ElevatedButton(
           onPressed: () {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('تم تسجيل الدخول بنجاح!'),
+                duration: Duration(seconds: 2),
+              ),
+            );
             Navigator.pushReplacementNamed(context, AppRoutes.helperHome);
           },
           style: ElevatedButton.styleFrom(
