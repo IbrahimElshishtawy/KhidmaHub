@@ -91,7 +91,7 @@ class _HelperLoginScreenState extends State<HelperLoginScreen>
             padding: EdgeInsets.fromLTRB(20, 20, 20, 20 + inset),
             child: Column(
               children: [
-                buildHeader(),
+                buildHeader(context),
                 const SizedBox(height: 20),
 
                 /// LOGIN CARD
