@@ -57,7 +57,8 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
               isSearching = p1;
             });
           },
-          onSearchChanged: _filterServices, // Adding the search functionality
+          onSearchChanged: _filterServices,
+          context: context, // Adding the search functionality
         ),
       ),
       body: SingleChildScrollView(
