@@ -1,27 +1,54 @@
-// ignore_for_file: deprecated_member_use, file_names, camel_case_types
+// ignore_for_file: deprecated_member_use, file_names
 
 import 'package:flutter/material.dart';
 import 'package:khidma/core/app_routes.dart';
-import 'package:khidma/mock/mock_data.dart';
-import 'package:khidma/models/service.dart';
+import 'package:khidma/features/customer/customer_home_screen/widget/buildBottomNavigationBar.dart';
+import 'package:khidma/features/customer/customer_home_screen/widget/buildCategorySection.dart';
+import 'package:khidma/mock/mock_data.dart'; // Ensure this file is correctly imported
+import 'package:khidma/models/service.dart'; // Ensure Service or Service_model is correctly imported
 
-class servicelist extends StatefulWidget {
-  const servicelist({super.key});
+class ServiceList extends StatefulWidget {
+  const ServiceList({super.key});
 
   @override
-  State<servicelist> createState() => _MyWidgetState();
+  State<ServiceList> createState() => _ServiceListState();
 }
 
-class _MyWidgetState extends State<servicelist> {
+class _ServiceListState extends State<ServiceList> {
+  int currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
-    // Returning the widget's layout
     return Scaffold(
       appBar: AppBar(title: const Text('Service List')),
-      body: buildServiceList(
-        mockServices,
-        context,
-      ), // Pass mockServices or filtered list
+      body: Column(
+        children: [
+          // Category section widget
+          buildCategorySection(),
+
+          // Wrap ListView with Expanded to avoid infinite height issue
+          Expanded(
+            child: buildServiceList(
+              mockServices,
+              context,
+            ), // Pass mockServices directly
+          ),
+        ],
+      ),
+      bottomNavigationBar: CustomBottomNavigationBar(
+        currentIndex: currentIndex,
+        onTap: (index) {
+          setState(() {
+            currentIndex = index;
+          });
+          // Navigate to corresponding routes
+          if (index == 1) {
+            Navigator.pushNamed(context, AppRoutes.customerProfile);
+          } else if (index == 2) {
+            Navigator.pushNamed(context, AppRoutes.settings);
+          }
+        },
+      ),
     );
   }
 
@@ -33,7 +60,7 @@ class _MyWidgetState extends State<servicelist> {
     return ListView.separated(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: filteredServices.length, // Using filteredServices here
+      itemCount: filteredServices.length, // Use filteredServices here
       separatorBuilder: (_, _) => const SizedBox(height: 12),
       itemBuilder: (context, index) {
         final service = filteredServices[index]; // Use filteredServices here
@@ -42,7 +69,7 @@ class _MyWidgetState extends State<servicelist> {
             Navigator.pushNamed(
               context,
               AppRoutes.serviceDetails,
-              arguments: service, // Pass the correct service to navigate
+              arguments: service, // Pass the correct service
             );
           },
           child: Container(
