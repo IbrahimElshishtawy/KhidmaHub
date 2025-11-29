@@ -1,7 +1,4 @@
-// ignore_for_file: unnecessary_import
-
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:camera/camera.dart';
@@ -22,7 +19,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   XFile? _imageFile;
   XFile? _faceImageFile;
-  bool _isLoading = false; // لتحديد حالة التحميل
+  bool _isLoading = false;
 
   Future<void> _pickDocumentImage() async {
     final ImagePicker picker = ImagePicker();
@@ -34,7 +31,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     });
   }
 
-  // هذه دالة لفتح الكاميرا والتقاط صورة الوجه
+  // دالة لفتح الكاميرا والتقاط صورة الوجه
   Future<void> _takeFacePhoto() async {
     final ImagePicker picker = ImagePicker();
     final XFile? pickedFile = await picker.pickImage(
@@ -51,14 +48,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
       _isLoading = true;
     });
 
-    // محاكاة تأخير (لحفظ البيانات أو تنفيذ الطلبات)
     await Future.delayed(const Duration(seconds: 2));
 
     setState(() {
       _isLoading = false;
     });
 
-    // يمكن إضافة منطق لحفظ البيانات هنا
     ScaffoldMessenger.of(
       context,
     ).showSnackBar(const SnackBar(content: Text('تم حفظ التعديلات')));
@@ -93,40 +88,20 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 const SizedBox(height: 16),
 
                 // اختيار صورة التوثيق
-                Row(
-                  children: [
-                    ElevatedButton(
-                      onPressed: _pickDocumentImage,
-                      child: const Text('اختيار صورة التوثيق'),
-                    ),
-                    const SizedBox(width: 16),
-                    if (_imageFile != null)
-                      Image.file(
-                        File(_imageFile!.path),
-                        width: 100,
-                        height: 100,
-                        fit: BoxFit.cover,
-                      ),
-                  ],
+                _buildImagePicker(
+                  label: 'اختيار صورة التوثيق',
+                  onPressed: _pickDocumentImage,
+                  icon: Icons.credit_card,
+                  imageFile: _imageFile,
                 ),
                 const SizedBox(height: 16),
 
                 // تصوير الوجه
-                Row(
-                  children: [
-                    ElevatedButton(
-                      onPressed: _takeFacePhoto,
-                      child: const Text('التقاط صورة للوجه'),
-                    ),
-                    const SizedBox(width: 16),
-                    if (_faceImageFile != null)
-                      Image.file(
-                        File(_faceImageFile!.path),
-                        width: 100,
-                        height: 100,
-                        fit: BoxFit.cover,
-                      ),
-                  ],
+                _buildImagePicker(
+                  label: 'التقاط صورة للوجه',
+                  onPressed: _takeFacePhoto,
+                  icon: Icons.face,
+                  imageFile: _faceImageFile,
                 ),
                 const SizedBox(height: 24),
 
@@ -140,7 +115,20 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               _saveChanges();
                             }
                           },
-                          child: const Text('حفظ التعديلات'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blueAccent,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 50,
+                              vertical: 15,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                          ),
+                          child: const Text(
+                            'حفظ التعديلات',
+                            style: TextStyle(fontSize: 16),
+                          ),
                         ),
                 ),
               ],
@@ -158,9 +146,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
       curve: Curves.easeInOut,
       padding: const EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(15),
         border: Border.all(color: Colors.blueAccent),
         color: Colors.transparent,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.blue.withOpacity(0.2),
+            blurRadius: 10,
+            offset: const Offset(0, 5),
+          ),
+        ],
       ),
       child: TextFormField(
         controller: controller,
@@ -180,6 +175,62 @@ class _EditProfilePageState extends State<EditProfilePage> {
           return null;
         },
       ),
+    );
+  }
+
+  // طريقة لإظهار الأيقونات والتصميم الخاص بالصور (توثيق أو الوجه)
+  Widget _buildImagePicker({
+    required String label,
+    required VoidCallback onPressed,
+    required IconData icon,
+    required XFile? imageFile,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            // زر مستطيل لرفع صورة التوثيق
+            ElevatedButton.icon(
+              onPressed: onPressed,
+              icon: Icon(icon, color: Colors.white, size: 35),
+              label: Text(label, style: const TextStyle(fontSize: 18)),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blueAccent,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 30,
+                  vertical: 15,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                minimumSize: Size(MediaQuery.of(context).size.width, 60),
+              ),
+            ),
+            const SizedBox(width: 16),
+            if (imageFile != null)
+              Container(
+                width:
+                    MediaQuery.of(context).size.width *
+                    0.5, // 50% of screen width
+                height: 200,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.3),
+                      blurRadius: 12,
+                      offset: const Offset(0, 5),
+                    ),
+                  ],
+                ),
+                child: Image.file(File(imageFile.path), fit: BoxFit.cover),
+              ),
+          ],
+        ),
+        const SizedBox(height: 8),
+        Divider(color: Colors.grey.withOpacity(0.6), thickness: 1),
+      ],
     );
   }
 }
