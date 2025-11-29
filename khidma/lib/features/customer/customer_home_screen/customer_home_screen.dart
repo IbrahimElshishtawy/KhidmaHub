@@ -1,13 +1,11 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:khidma/features/customer/customer_home_screen/widget/buildAppBar.dart';
 import 'package:khidma/features/customer/customer_home_screen/widget/buildBottomNavigationBar.dart';
 import 'package:khidma/features/customer/customer_home_screen/widget/buildCategorySection.dart';
 import 'package:khidma/features/customer/customer_home_screen/widget/buildServiceList.dart';
+import 'package:khidma/models/service.dart';
 import '../../../mock/mock_data.dart';
 import '../../../core/app_routes.dart';
-// ignore: unused_import
-import 'package:khidma/models/service.dart';
 
 class CustomerHomeScreen extends StatefulWidget {
   const CustomerHomeScreen({super.key});
@@ -20,25 +18,27 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
   int currentIndex = 0;
   bool isSearching = false;
   TextEditingController searchController = TextEditingController();
-  List<Service> filteredServices = mockServices
-      .cast<Service>(); // List to hold filtered services
+  List<Service_model> filteredServices = mockServices
+      .cast<Service_model>(); // List to hold filtered services
 
   // Function to filter services based on search text
   void _filterServices(String query) {
     setState(() {
       if (query.isEmpty) {
         filteredServices = mockServices
-            .cast<Service>(); // Show all services when query is empty
+            .cast<Service_model>(); // Show all services when query is empty
       } else {
         filteredServices = mockServices
             .where(
-              (service) =>
-                  service.title.toLowerCase().contains(query.toLowerCase()) ||
-                  service.description.toLowerCase().contains(
+              (serviceModel) =>
+                  serviceModel.title.toLowerCase().contains(
+                    query.toLowerCase(),
+                  ) ||
+                  serviceModel.description.toLowerCase().contains(
                     query.toLowerCase(),
                   ),
             )
-            .cast<Service>()
+            .cast<Service_model>()
             .toList(); // Filter services based on query
       }
     });
@@ -67,7 +67,9 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
           children: [
             buildCategorySection(),
             const SizedBox(height: 16),
-            ServiceList(),
+            ServiceList(
+              filteredServices: filteredServices,
+            ), // Passing filtered services
           ],
         ),
       ),
