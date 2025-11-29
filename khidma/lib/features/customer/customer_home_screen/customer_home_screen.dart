@@ -18,28 +18,50 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
   int currentIndex = 0;
   bool isSearching = false;
   TextEditingController searchController = TextEditingController();
-  List<Service_model> filteredServices = mockServices
-      .cast<Service_model>(); // List to hold filtered services
+  List<Service_model> filteredServices = mockServices.cast<Service_model>();
+
+  // Function to filter services based on search text
   void _filterServices(String query) {
     setState(() {
-      if (query.isEmpty) {
-        filteredServices = mockServices
-            .cast<Service_model>(); // Show all services when query is empty
-      } else {
-        filteredServices = mockServices
-            .where(
-              (serviceModel) =>
-                  serviceModel.title.toLowerCase().contains(
-                    query.toLowerCase(),
-                  ) ||
-                  serviceModel.description.toLowerCase().contains(
-                    query.toLowerCase(),
-                  ),
-            )
-            .cast<Service_model>()
-            .toList(); // Filter services based on query
-      }
+      filteredServices = query.isEmpty
+          ? mockServices.cast<Service_model>()
+          : mockServices
+                .where(
+                  (serviceModel) =>
+                      serviceModel.title.toLowerCase().contains(
+                        query.toLowerCase(),
+                      ) ||
+                      serviceModel.description.toLowerCase().contains(
+                        query.toLowerCase(),
+                      ),
+                )
+                .cast<Service_model>()
+                .toList();
     });
+  }
+
+  // Function to handle the navigation
+  void _onNavigationTapped(int index) {
+    setState(() {
+      currentIndex = index;
+    });
+
+    switch (index) {
+      case 1:
+        Navigator.pushNamed(context, AppRoutes.customerProfile);
+        break;
+      case 2:
+        Navigator.pushNamed(context, AppRoutes.settings);
+        break;
+      case 3:
+        Navigator.pushNamed(
+          context,
+          AppRoutes.chats,
+        ); // Navigate to chat screen
+        break;
+      default:
+        break;
+    }
   }
 
   @override
@@ -50,13 +72,13 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
         child: buildAppBar(
           isSearching: isSearching,
           searchController: searchController,
-          onSearchToggle: (bool p1) {
+          onSearchToggle: (bool isSearching) {
             setState(() {
-              isSearching = p1;
+              this.isSearching = isSearching;
             });
           },
           onSearchChanged: _filterServices,
-          context: context, // Adding the search functionality
+          context: context,
         ),
       ),
       body: GestureDetector(
@@ -71,29 +93,15 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
               buildCategorySection(),
               const SizedBox(height: 16),
               ServiceList(
-                filteredServices: filteredServices, // Pass filtered services
-              ),
+                filteredServices: filteredServices,
+              ), // Pass filtered services
             ],
           ),
         ),
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: currentIndex,
-        onTap: (index) {
-          setState(() {
-            currentIndex = index;
-          });
-          if (index == 1) {
-            Navigator.pushNamed(context, AppRoutes.customerProfile);
-          } else if (index == 2) {
-            Navigator.pushNamed(context, AppRoutes.settings);
-          } else if (index == 3) {
-            Navigator.pushNamed(
-              context,
-              AppRoutes.chats, // Navigate to chat screen
-            );
-          }
-        },
+        onTap: _onNavigationTapped,
       ),
     );
   }
