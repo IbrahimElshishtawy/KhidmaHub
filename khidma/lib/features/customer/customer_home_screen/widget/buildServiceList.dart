@@ -1,67 +1,21 @@
-// ignore_for_file: deprecated_member_use, file_names
+// ignore_for_file: deprecated_member_use, unnecessary_underscores, file_names
 
 import 'package:flutter/material.dart';
 import 'package:khidma/core/app_routes.dart';
-import 'package:khidma/features/customer/customer_home_screen/widget/buildBottomNavigationBar.dart';
-import 'package:khidma/features/customer/customer_home_screen/widget/buildCategorySection.dart';
-import 'package:khidma/mock/mock_data.dart'; // Ensure this file is correctly imported
-import 'package:khidma/models/service.dart'; // Ensure Service or Service_model is correctly imported
+import 'package:khidma/models/service.dart'; // Ensure Service is correctly imported
 
-class ServiceList extends StatefulWidget {
-  const ServiceList({super.key});
+class ServiceList extends StatelessWidget {
+  final List<Service_model> filteredServices;
 
-  @override
-  State<ServiceList> createState() => _ServiceListState();
-}
-
-class _ServiceListState extends State<ServiceList> {
-  int currentIndex = 0;
+  const ServiceList({super.key, required this.filteredServices});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Service List')),
-      body: Column(
-        children: [
-          // Category section widget
-          buildCategorySection(),
-
-          // Wrap ListView with Expanded to avoid infinite height issue
-          Expanded(
-            child: buildServiceList(
-              mockServices,
-              context,
-            ), // Pass mockServices directly
-          ),
-        ],
-      ),
-      bottomNavigationBar: CustomBottomNavigationBar(
-        currentIndex: currentIndex,
-        onTap: (index) {
-          setState(() {
-            currentIndex = index;
-          });
-          // Navigate to corresponding routes
-          if (index == 1) {
-            Navigator.pushNamed(context, AppRoutes.customerProfile);
-          } else if (index == 2) {
-            Navigator.pushNamed(context, AppRoutes.settings);
-          }
-        },
-      ),
-    );
-  }
-
-  // Function to build the service list
-  Widget buildServiceList(
-    List<Service_model> filteredServices,
-    BuildContext context,
-  ) {
     return ListView.separated(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: filteredServices.length, // Use filteredServices here
-      separatorBuilder: (_, _) => const SizedBox(height: 12),
+      separatorBuilder: (_, __) => const SizedBox(height: 12),
       itemBuilder: (context, index) {
         final service = filteredServices[index]; // Use filteredServices here
         return GestureDetector(
