@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:khidma/features/customer/customer_chat/coustomer_chatDetail.dart';
+import 'package:khidma/features/customer/customer_chat/customer_chat.dart';
 
 import '../features/auth/onboarding_screen.dart';
 import '../features/auth/role_selection_screen.dart';
@@ -40,6 +42,8 @@ class AppRoutes {
   static const String jobDetails = '/job-details';
   static const String helperMissionTracking = '/helper-mission-tracking';
   static const String earningsHistory = '/earnings-history';
+  static const String chats = '/chats';
+  static const String chatDetail = '/chat-detail';
 
   static Route<dynamic> generateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
@@ -97,7 +101,14 @@ class AppRoutes {
 
       case earningsHistory:
         return MaterialPageRoute(builder: (_) => const EarningsHistoryScreen());
-
+      case chats:
+        return MaterialPageRoute(builder: (_) => const ChatListPage());
+      case chatDetail:
+        final args = routeSettings.arguments as Map<String, dynamic>;
+        final chatId = args['chatId'] as int;
+        return MaterialPageRoute(
+          builder: (_) => ChatDetailPage(chatId: chatId),
+        );
       default:
         return MaterialPageRoute(builder: (_) => const OnboardingScreen());
     }
