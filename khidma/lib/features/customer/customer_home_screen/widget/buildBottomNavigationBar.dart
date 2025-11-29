@@ -24,7 +24,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
     return BottomNavigationBar(
       backgroundColor: const Color(0xFF3B5998),
       currentIndex: widget.currentIndex,
-      selectedItemColor: Colors.white,
+      selectedItemColor: const Color.fromARGB(255, 116, 93, 93),
       unselectedItemColor: Colors.white70,
       onTap: (i) {
         widget.onTap(i);
@@ -32,8 +32,11 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
           Navigator.pushNamed(context, AppRoutes.customerProfile);
         } else if (i == 2) {
           Navigator.pushNamed(context, AppRoutes.settings);
+        } else if (i == 3) {
+          Navigator.pushNamed(context, AppRoutes.chats); // Add the chat screen
         }
       },
+      type: BottomNavigationBarType.fixed, // Makes the items spaced evenly
       items: [
         BottomNavigationBarItem(
           icon: _buildIcon(Icons.home_outlined, 0),
@@ -44,7 +47,11 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
           label: 'ملف شخصي',
         ),
         BottomNavigationBarItem(
-          icon: _buildIcon(Icons.settings_outlined, 2),
+          icon: _buildIcon(Icons.chat_bubble_outline, 2), // Chat icon
+          label: 'الدردشات',
+        ),
+        BottomNavigationBarItem(
+          icon: _buildIcon(Icons.settings_outlined, 3),
           label: 'الإعدادات',
         ),
       ],
@@ -53,7 +60,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
 
   Widget _buildIcon(IconData icon, int index) {
     return AnimatedContainer(
-      duration: const Duration(milliseconds: 200),
+      duration: const Duration(milliseconds: 300),
       curve: Curves.easeOut,
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
@@ -73,7 +80,9 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
       ),
       child: Icon(
         icon,
-        size: widget.currentIndex == index ? 30 : 25,
+        size: widget.currentIndex == index
+            ? 30
+            : 25, // Adjusted icon size for active state
         color: widget.currentIndex == index ? Colors.white : Colors.white70,
       ),
     );
