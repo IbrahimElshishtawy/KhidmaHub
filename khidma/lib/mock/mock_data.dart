@@ -2,8 +2,8 @@ import '../models/service.dart';
 import '../models/khidma_user.dart';
 import '../models/order.dart';
 
-final mockServices = <Service>[
-  Service(
+final mockServices = <Service_model>[
+  Service_model(
     id: '1',
     title: 'خدمات المشاوير والمرافقة',
     description: 'خدمات النقل والمرافقة الشخصية لمشاويرك وأطفالك.',
@@ -11,7 +11,7 @@ final mockServices = <Service>[
     price: 150,
     duration: '3 ساعات',
   ),
-  Service(
+  Service_model(
     id: '2',
     title: 'خدمات منزلية خفيفة',
     description: 'المساعدة في الأعمال المنزلية البسيطة.',
@@ -19,7 +19,7 @@ final mockServices = <Service>[
     price: 120,
     duration: '2 ساعة',
   ),
-  Service(
+  Service_model(
     id: '3',
     title: 'خدمات الشركات والمكاتب',
     description: 'حلول متكاملة للشركات الصغيرة والمتوسطة.',
