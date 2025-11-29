@@ -1,19 +1,29 @@
 // ignore_for_file: deprecated_member_use
 
-// Header
 import 'package:flutter/material.dart';
 
-Widget buildHeader() {
+Widget buildHeader(BuildContext context) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      Text(
-        "خدمة",
-        style: TextStyle(
-          fontSize: 30,
-          color: Colors.white.withOpacity(0.95),
-          fontWeight: FontWeight.bold,
-        ),
+      Row(
+        children: [
+          IconButton(
+            icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          const SizedBox(width: 8),
+          Text(
+            "خدمة",
+            style: TextStyle(
+              fontSize: 30,
+              color: Colors.white.withOpacity(0.95),
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
       ),
       const SizedBox(height: 10),
       Text(
