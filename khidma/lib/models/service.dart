@@ -1,4 +1,6 @@
-class Service {
+// ignore_for_file: camel_case_types
+
+class Service_model {
   final String id;
   final String title;
   final String description;
@@ -6,7 +8,7 @@ class Service {
   final double price;
   final String duration;
 
-  Service({
+  Service_model({
     required this.id,
     required this.title,
     required this.description,
