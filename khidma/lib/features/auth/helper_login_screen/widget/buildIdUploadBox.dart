@@ -36,7 +36,7 @@ Widget buildIdUploadBox() {
                 "إرفاق الهوية (Mock UI فقط)",
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
               ),
-              SizedBox(height: 4),
+              SizedBox(height: 3),
               Text(
                 "قم برفع صورة الهوية أو الإقامة للتحقق من حسابك.",
                 style: TextStyle(fontSize: 12, color: Colors.grey),
