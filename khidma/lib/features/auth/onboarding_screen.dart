@@ -66,7 +66,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
               // الصفحة الثانية مع صورة جديدة
               _buildOnboardingPage(
                 imageUrl:
-                    'https://via.placeholder.com/800x600.png?text=Your+App+Description', // استبدل بالصورة التي تريدها
+                    'https://images.pexels.com/photos/3183197/pexels-photo-3183197.jpeg?auto=compress&cs=tinysrgb&w=800',
                 title: 'عن برنامجنا',
                 description:
                     'برنامج خدمة يقدم لك أفضل المساعدين لإنجاز المهام بسرعة ودقة. يمكنك طلب الخدمة في أي وقت من خلال التطبيق بسهولة.',
