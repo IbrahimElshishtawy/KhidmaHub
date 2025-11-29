@@ -1,0 +1,129 @@
+// ignore_for_file: deprecated_member_use, file_names, camel_case_types
+
+import 'package:flutter/material.dart';
+import 'package:khidma/core/app_routes.dart';
+import 'package:khidma/mock/mock_data.dart';
+import 'package:khidma/models/service.dart';
+
+class servicelist extends StatefulWidget {
+  const servicelist({super.key});
+
+  @override
+  State<servicelist> createState() => _MyWidgetState();
+}
+
+class _MyWidgetState extends State<servicelist> {
+  @override
+  Widget build(BuildContext context) {
+    // Returning the widget's layout
+    return Scaffold(
+      appBar: AppBar(title: const Text('Service List')),
+      body: buildServiceList(
+        mockServices,
+        context,
+      ), // Pass mockServices or filtered list
+    );
+  }
+
+  // Function to build the service list
+  Widget buildServiceList(
+    List<Service_model> filteredServices,
+    BuildContext context,
+  ) {
+    return ListView.separated(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: filteredServices.length, // Using filteredServices here
+      separatorBuilder: (_, _) => const SizedBox(height: 12),
+      itemBuilder: (context, index) {
+        final service = filteredServices[index]; // Use filteredServices here
+        return GestureDetector(
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              AppRoutes.serviceDetails,
+              arguments: service, // Pass the correct service to navigate
+            );
+          },
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.15),
+                  blurRadius: 15,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 24,
+                      backgroundColor: const Color(0xFFEAF2FF),
+                      child: Icon(
+                        Icons.directions_car, // Change icon as needed
+                        color: const Color(0xFF3B5998),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        service.title, // Display service title
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          color: Color(0xFF3B5998),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  service.description, // Display service description
+                  style: const TextStyle(color: Colors.grey, fontSize: 14),
+                ),
+                const SizedBox(height: 12),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(
+                        context,
+                        AppRoutes.serviceDetails,
+                        arguments: service, // Navigate to service details
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Color(0xFF3B5998), // Text color
+                      backgroundColor: Colors.white, // Button background color
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      textStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      side: BorderSide(
+                        color: Color(0xFF3B5998), // Border color
+                        width: 2,
+                      ),
+                    ),
+                    child: const Text('استكشاف الخدمات'),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
