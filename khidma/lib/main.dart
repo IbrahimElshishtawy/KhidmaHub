@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -25,7 +27,25 @@ class KhidmaApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       initialRoute: AppRoutes.onboarding,
+      scrollBehavior: const _AppScrollBehavior(),
       onGenerateRoute: AppRoutes.generateRoute,
     );
   }
+}
+
+class _AppScrollBehavior extends ScrollBehavior {
+  const _AppScrollBehavior();
+
+  @override
+  ScrollPhysics getScrollPhysics(BuildContext context) {
+    return const ClampingScrollPhysics();
+  }
+
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+    PointerDeviceKind.touch,
+    PointerDeviceKind.mouse,
+    PointerDeviceKind.trackpad,
+    PointerDeviceKind.stylus,
+  };
 }
