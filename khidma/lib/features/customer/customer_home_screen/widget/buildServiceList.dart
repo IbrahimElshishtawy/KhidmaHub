@@ -1,8 +1,7 @@
-// ignore_for_file: deprecated_member_use, unnecessary_underscores, file_names
-
+// ServiceList.dart
 import 'package:flutter/material.dart';
+import 'package:khidma/models/service.dart';
 import 'package:khidma/core/app_routes.dart';
-import 'package:khidma/models/service.dart'; // Ensure Service is correctly imported
 
 class ServiceList extends StatelessWidget {
   final List<Service_model> filteredServices;
@@ -14,16 +13,16 @@ class ServiceList extends StatelessWidget {
     return ListView.separated(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: filteredServices.length, // Use filteredServices here
+      itemCount: filteredServices.length,
       separatorBuilder: (_, __) => const SizedBox(height: 12),
       itemBuilder: (context, index) {
-        final service = filteredServices[index]; // Use filteredServices here
+        final service = filteredServices[index];
         return GestureDetector(
           onTap: () {
             Navigator.pushNamed(
               context,
               AppRoutes.serviceDetails,
-              arguments: service, // Pass the correct service
+              arguments: service, // Pass the selected service to details page
             );
           },
           child: Container(
@@ -48,14 +47,15 @@ class ServiceList extends StatelessWidget {
                       radius: 24,
                       backgroundColor: const Color(0xFFEAF2FF),
                       child: Icon(
-                        Icons.directions_car, // Change icon as needed
+                        Icons
+                            .directions_car, // Adjust icon based on service type
                         color: const Color(0xFF3B5998),
                       ),
                     ),
                     const SizedBox(width: 12),
                     Expanded(
                       child: Text(
-                        service.title, // Display service title
+                        service.title, // Display the service title
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
@@ -97,7 +97,7 @@ class ServiceList extends StatelessWidget {
                         width: 2,
                       ),
                     ),
-                    child: const Text('استكشاف الخدمات'),
+                    child: const Text('استكشاف الخدمة'),
                   ),
                 ),
               ],
