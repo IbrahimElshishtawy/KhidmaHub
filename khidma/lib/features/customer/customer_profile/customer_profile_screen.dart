@@ -19,12 +19,10 @@ class CustomerProfileScreen extends StatelessWidget {
         ],
       ),
       body: SingleChildScrollView(
-        // تفعيل التمرير في حالة زيادة المحتوى
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // عرض صورة الشخصية واسم المستخدم والبريد الإلكتروني والتوثيق جنبًا إلى جنب
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -32,10 +30,10 @@ class CustomerProfileScreen extends StatelessWidget {
                   radius: 50,
                   backgroundImage: AssetImage(
                     'assets/images/profile_picture.png',
-                  ), // صورة شخصية افتراضية
+                  ),
                 ),
                 const SizedBox(width: 16),
-                // عرض الاسم والبريد الإلكتروني والتوثيق
+
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
