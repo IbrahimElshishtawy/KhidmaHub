@@ -18,7 +18,7 @@ import 'package:khidma/features/customer/customer_home_screen/HomeScreen.dart';
 import 'package:khidma/features/customer/customer_profile/EditProfilePage.dart';
 import 'package:khidma/features/customer/order/OrderHistoryPage.dart';
 import 'package:khidma/features/customer/payment_screen.dart';
-import 'package:khidma/features/customer/rating_payment_screen.dart';
+import 'package:khidma/features/customer/rating_payment/rating_payment_screen.dart';
 
 import '../features/auth/onboarding_screen.dart';
 import '../features/auth/role_selection_screen.dart';
