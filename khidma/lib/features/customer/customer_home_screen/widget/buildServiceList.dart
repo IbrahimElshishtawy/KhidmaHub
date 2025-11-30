@@ -1,4 +1,6 @@
 // ServiceList.dart
+// ignore_for_file: deprecated_member_use, file_names
+
 import 'package:flutter/material.dart';
 import 'package:khidma/models/service.dart';
 import 'package:khidma/core/app_routes.dart';
@@ -14,7 +16,7 @@ class ServiceList extends StatelessWidget {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: filteredServices.length,
-      separatorBuilder: (_, __) => const SizedBox(height: 12),
+      separatorBuilder: (_, _) => const SizedBox(height: 12),
       itemBuilder: (context, index) {
         final service = filteredServices[index];
         return GestureDetector(
