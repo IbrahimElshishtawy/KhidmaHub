@@ -1,35 +1,57 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:khidma/core/app_routes.dart';
 
 class NotificationPage extends StatelessWidget {
   const NotificationPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 65, 93, 155),
-        automaticallyImplyLeading: false, // Remove default back button
-        title: const Text('الإشعارات'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back), // Back arrow icon
-          onPressed: () {
-            Navigator.pop(context); // Pop the current screen to go back
-          },
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 65, 93, 155),
+          automaticallyImplyLeading: false,
+          title: const Text('الإشعارات'),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
         ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: ListView(
-          children: List.generate(10, (index) {
-            return NotificationCard(
-              title: "Notification ${index + 1}",
-              message:
-                  "This is the message for notification number ${index + 1}.",
-              date: "2025-11-29",
-            );
-          }),
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: ListView.builder(
+            itemCount: 10,
+            itemBuilder: (context, index) {
+              final title = "إشعار رقم ${index + 1}";
+              final message =
+                  "هذا هو محتوى الإشعار رقم ${index + 1}. اضغط لعرض التفاصيل.";
+              final date = "2025-11-29";
+
+              return GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    AppRoutes.notificationDetail,
+                    arguments: {
+                      "title": title,
+                      "message": message,
+                      "date": date,
+                    },
+                  );
+                },
+                child: NotificationCard(
+                  title: title,
+                  message: message,
+                  date: date,
+                ),
+              );
+            },
+          ),
         ),
       ),
     );
@@ -54,7 +76,7 @@ class NotificationCard extends StatelessWidget {
     return Card(
       elevation: 4,
       margin: const EdgeInsets.only(bottom: 16),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: ListTile(
         contentPadding: const EdgeInsets.all(16),
         title: Text(
@@ -64,13 +86,25 @@ class NotificationCard extends StatelessWidget {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(message),
-            const SizedBox(height: 8),
-            Text(
-              date,
-              style: const TextStyle(color: Colors.grey, fontSize: 12),
+            const SizedBox(height: 6),
+            Text(message, maxLines: 2, overflow: TextOverflow.ellipsis),
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                const Icon(Icons.access_time, color: Colors.grey, size: 16),
+                const SizedBox(width: 4),
+                Text(
+                  date,
+                  style: const TextStyle(color: Colors.grey, fontSize: 12),
+                ),
+              ],
             ),
           ],
+        ),
+        trailing: const Icon(
+          Icons.arrow_forward_ios,
+          size: 16,
+          color: Colors.grey,
         ),
         isThreeLine: true,
       ),
