@@ -18,8 +18,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
 
-  XFile? _imageFile;
-  XFile? _faceImageFile;
+  XFile? _imageFile; // صورة البطاقة
+  XFile? _faceImageFile; // صورة الوجه
   bool _isLoading = false;
 
   Future<void> _pickDocumentImage() async {
@@ -27,23 +27,25 @@ class _EditProfilePageState extends State<EditProfilePage> {
     final XFile? pickedFile = await picker.pickImage(
       source: ImageSource.gallery,
     );
-    setState(() {
-      _imageFile = pickedFile;
-    });
+    if (pickedFile != null) {
+      setState(() {
+        _imageFile = pickedFile;
+      });
+    }
   }
 
-  // دالة لفتح الكاميرا والتقاط صورة الوجه
   Future<void> _takeFacePhoto() async {
     final ImagePicker picker = ImagePicker();
     final XFile? pickedFile = await picker.pickImage(
       source: ImageSource.camera,
     );
-    setState(() {
-      _faceImageFile = pickedFile;
-    });
+    if (pickedFile != null) {
+      setState(() {
+        _faceImageFile = pickedFile;
+      });
+    }
   }
 
-  // دالة لحفظ التعديلات مع إظهار شريط التحميل
   void _saveChanges() async {
     setState(() {
       _isLoading = true;
@@ -72,44 +74,41 @@ class _EditProfilePageState extends State<EditProfilePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // تعديل الاسم
                 _buildTextField('الاسم', _nameController),
                 const SizedBox(height: 16),
 
-                // تعديل البريد الإلكتروني
                 _buildTextField('البريد الإلكتروني', _emailController),
                 const SizedBox(height: 16),
 
-                // تعديل رقم الهاتف
                 _buildTextField('رقم الهاتف', _phoneController),
                 const SizedBox(height: 16),
 
-                // تعديل العنوان
                 _buildTextField('العنوان', _addressController),
-                const SizedBox(height: 16),
+                const SizedBox(height: 24),
 
-                // اختيار صورة التوثيق
-                _buildImagePicker(
-                  label: 'اختيار صورة التوثيق',
-                  onPressed: _pickDocumentImage,
-                  icon: Icons.credit_card,
+                // كارد توثيق البطاقة
+                _buildImageCard(
+                  title: 'توثيق البطاقة',
+                  subtitle: 'اضغط لرفع صورة بطاقة الهوية الخاصة بك',
+                  icon: Icons.credit_card_rounded,
                   imageFile: _imageFile,
+                  onTap: _pickDocumentImage,
                 ),
                 const SizedBox(height: 16),
 
-                // تصوير الوجه
-                _buildImagePicker(
-                  label: 'التقاط صورة للوجه',
-                  onPressed: _takeFacePhoto,
-                  icon: Icons.face,
+                // كارد فحص الوجه
+                _buildImageCard(
+                  title: 'فحص الوجه',
+                  subtitle: 'اضغط لالتقاط صورة لوجهك للتحقق',
+                  icon: Icons.face_retouching_natural_rounded,
                   imageFile: _faceImageFile,
+                  onTap: _takeFacePhoto,
                 ),
                 const SizedBox(height: 24),
 
-                // زر حفظ التعديلات
                 Center(
                   child: _isLoading
-                      ? const CircularProgressIndicator() // شريط تحميل
+                      ? const CircularProgressIndicator()
                       : ElevatedButton(
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
@@ -140,7 +139,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     );
   }
 
-  // طريقة لإنشاء حقل نصي مع تصميم احترافي
+  // حقل نصي بتصميم لطيف
   Widget _buildTextField(String label, TextEditingController controller) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
@@ -179,58 +178,142 @@ class _EditProfilePageState extends State<EditProfilePage> {
     );
   }
 
-  // طريقة لإظهار الأيقونات والتصميم الخاص بالصور (توثيق أو الوجه)
-  Widget _buildImagePicker({
-    required String label,
-    required VoidCallback onPressed,
+  Widget _buildImageCard({
+    required String title,
+    required String subtitle,
     required IconData icon,
+    required VoidCallback onTap,
     required XFile? imageFile,
   }) {
+    final bool hasImage = imageFile != null;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            // زر مستطيل لرفع صورة التوثيق
-            ElevatedButton.icon(
-              onPressed: onPressed,
-              icon: Icon(icon, color: Colors.white, size: 35),
-              label: Text(label, style: const TextStyle(fontSize: 18)),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blueAccent,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 30,
-                  vertical: 15,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                minimumSize: Size(MediaQuery.of(context).size.width, 60),
+        Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: onTap,
+            borderRadius: BorderRadius.circular(22),
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 250),
+              curve: Curves.easeOut,
+              height: 190, // نفس الارتفاع للكاردين
+              width: double.infinity,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(22),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.15),
+                    blurRadius: 18,
+                    offset: const Offset(0, 8),
+                  ),
+                ],
+                gradient: hasImage
+                    ? null
+                    : const LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [Color(0xFF1565C0), Color(0xFF42A5F5)],
+                      ),
+                color: hasImage ? Colors.grey.shade900 : null,
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(22),
+                child: hasImage
+                    ? Stack(
+                        fit: StackFit.expand,
+                        children: [
+                          Image.file(File(imageFile!.path), fit: BoxFit.cover),
+                          Container(color: Colors.black.withOpacity(0.35)),
+                          Align(
+                            alignment: Alignment.bottomLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const Icon(
+                                    Icons.check_circle_rounded,
+                                    color: Colors.greenAccent,
+                                    size: 26,
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Expanded(
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          title,
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 4),
+                                        const Text(
+                                          'تم اختيار الصورة بنجاح، اضغط لتغييرها',
+                                          style: TextStyle(
+                                            color: Colors.white70,
+                                            fontSize: 13,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                    : Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TweenAnimationBuilder<double>(
+                            tween: Tween(begin: 0.9, end: 1.0),
+                            duration: const Duration(milliseconds: 400),
+                            curve: Curves.easeOutBack,
+                            builder: (context, value, child) {
+                              return Transform.scale(
+                                scale: value,
+                                child: child,
+                              );
+                            },
+                            child: Icon(icon, size: 46, color: Colors.white),
+                          ),
+                          const SizedBox(height: 14),
+                          Text(
+                            title,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          const SizedBox(height: 6),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 24.0,
+                            ),
+                            child: Text(
+                              subtitle,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                color: Colors.white70,
+                                fontSize: 13,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
               ),
             ),
-            const SizedBox(width: 16),
-            if (imageFile != null)
-              Container(
-                width:
-                    MediaQuery.of(context).size.width *
-                    0.5, // 50% of screen width
-                height: 200,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.3),
-                      blurRadius: 12,
-                      offset: const Offset(0, 5),
-                    ),
-                  ],
-                ),
-                child: Image.file(File(imageFile.path), fit: BoxFit.cover),
-              ),
-          ],
+          ),
         ),
-        const SizedBox(height: 8),
-        Divider(color: Colors.grey.withOpacity(0.6), thickness: 1),
       ],
     );
   }
