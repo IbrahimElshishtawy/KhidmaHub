@@ -1,11 +1,11 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:khidma/features/customer/customer_home_screen/widget/buildAppBar.dart';
-import 'package:khidma/features/customer/customer_home_screen/widget/buildBottomNavigationBar.dart';
 import 'package:khidma/features/customer/customer_home_screen/widget/buildCategorySection.dart';
 import 'package:khidma/features/customer/customer_home_screen/widget/buildServiceList.dart';
 import 'package:khidma/models/service.dart';
 import '../../../mock/mock_data.dart';
-import '../../../core/app_routes.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
