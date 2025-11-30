@@ -1,4 +1,4 @@
-// ignore_for_file: file_names
+// ignore_for_file: deprecated_member_use, file_names
 
 import 'package:flutter/material.dart';
 
@@ -50,7 +50,7 @@ class _WishlistPageState extends State<WishlistPage> {
             : ListView.separated(
                 padding: const EdgeInsets.all(16),
                 itemCount: wishlist.length,
-                separatorBuilder: (_, __) => const SizedBox(height: 12),
+                separatorBuilder: (_, _) => const SizedBox(height: 12),
                 itemBuilder: (context, index) {
                   final item = wishlist[index];
 
