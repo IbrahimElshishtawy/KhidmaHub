@@ -1,7 +1,8 @@
+// ignore_for_file: deprecated_member_use, use_build_context_synchronously, file_names
+
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:camera/camera.dart';
 
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({super.key});
