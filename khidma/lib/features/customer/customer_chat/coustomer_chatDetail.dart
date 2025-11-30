@@ -1,5 +1,5 @@
 // ChatDetailPage.dart
-// ignore_for_file: library_private_types_in_public_api
+// ignore_for_file: file_names, library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
 
