@@ -224,7 +224,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     ? Stack(
                         fit: StackFit.expand,
                         children: [
-                          Image.file(File(imageFile!.path), fit: BoxFit.cover),
+                          Image.file(File(imageFile.path), fit: BoxFit.cover),
                           Container(color: Colors.black.withOpacity(0.35)),
                           Align(
                             alignment: Alignment.bottomLeft,
