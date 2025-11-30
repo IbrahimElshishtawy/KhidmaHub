@@ -1,68 +1,142 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: file_names
 
-class SettingsScreen extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:khidma/core/app_routes.dart';
+
+class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    bool notificationsEnabled = true;
-    bool appUpdatesEnabled = true;
+  State<SettingsScreen> createState() => _SettingsScreenState();
+}
 
-    return Scaffold(
-      appBar: AppBar(title: const Text('الإعدادات')),
-      body: StatefulBuilder(
-        builder: (context, setState) {
-          return ListView(
-            children: [
-              const SizedBox(height: 8),
-              const ListTile(
-                title: Text('اللغة'),
-                subtitle: Text('العربية'),
-                trailing: Icon(Icons.arrow_forward_ios, size: 16),
-              ),
-              SwitchListTile(
-                title: const Text('الإشعارات'),
-                value: notificationsEnabled,
-                onChanged: (val) {
-                  setState(() => notificationsEnabled = val);
-                },
-              ),
-              SwitchListTile(
-                title: const Text('تحديثات التطبيق التلقائية'),
-                value: appUpdatesEnabled,
-                onChanged: (val) {
-                  setState(() => appUpdatesEnabled = val);
-                },
-              ),
-              const Divider(),
-              const ListTile(
-                title: Text('إدارة الحساب'),
-                trailing: Icon(Icons.arrow_forward_ios, size: 16),
-              ),
-              const ListTile(
-                title: Text('الخصوصية'),
-                trailing: Icon(Icons.arrow_forward_ios, size: 16),
-              ),
-              const ListTile(
-                title: Text('حول التطبيق'),
-                trailing: Icon(Icons.arrow_forward_ios, size: 16),
-              ),
-              const Divider(),
-              const ListTile(
-                title: Text('المساعدة والدعم'),
-                trailing: Icon(Icons.arrow_forward_ios, size: 16),
-              ),
-              const ListTile(
-                title: Text('التواصل معنا'),
-                trailing: Icon(Icons.arrow_forward_ios, size: 16),
-              ),
-              const ListTile(
-                title: Text('تقييم التطبيق'),
-                trailing: Icon(Icons.arrow_forward_ios, size: 16),
-              ),
-            ],
-          );
-        },
+class _SettingsScreenState extends State<SettingsScreen> {
+  bool notificationsEnabled = true;
+  bool appUpdatesEnabled = true;
+
+  @override
+  Widget build(BuildContext context) {
+    return Directionality(
+      textDirection: TextDirection.rtl, // عشان تخطيط عربي
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: const Color(0xFF3B5998),
+          title: const Text('الإعدادات'),
+        ),
+        body: ListView(
+          children: [
+            const SizedBox(height: 8),
+
+            // اللغة
+            ListTile(
+              title: const Text('اللغة'),
+              subtitle: const Text('العربية'),
+              trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+              onTap: () {
+                Navigator.pushNamed(context, AppRoutes.languageSettings);
+              },
+            ),
+
+            // الإشعارات (سويتش عام)
+            SwitchListTile(
+              title: const Text('الإشعارات'),
+              value: notificationsEnabled,
+              onChanged: (val) {
+                setState(() => notificationsEnabled = val);
+              },
+            ),
+
+            // تحديثات التطبيق التلقائية
+            SwitchListTile(
+              title: const Text('تحديثات التطبيق التلقائية'),
+              value: appUpdatesEnabled,
+              onChanged: (val) {
+                setState(() => appUpdatesEnabled = val);
+              },
+            ),
+
+            // إعدادات الإشعارات التفصيلية
+            ListTile(
+              title: const Text('إعدادات الإشعارات'),
+              trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+              onTap: () {
+                Navigator.pushNamed(context, AppRoutes.notificationSettings);
+              },
+            ),
+
+            const Divider(),
+
+            // إدارة الحساب → صفحة تعديل الملف الشخصي
+            ListTile(
+              title: const Text('إدارة الحساب'),
+              trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+              onTap: () {
+                Navigator.pushNamed(context, AppRoutes.editProfile);
+              },
+            ),
+
+            // الخصوصية → سياسة الخصوصية
+            ListTile(
+              title: const Text('الخصوصية'),
+              trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+              onTap: () {
+                Navigator.pushNamed(context, AppRoutes.privacyPolicy);
+              },
+            ),
+
+            // حول التطبيق
+            ListTile(
+              title: const Text('حول التطبيق'),
+              trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+              onTap: () {
+                Navigator.pushNamed(context, AppRoutes.aboutUs);
+              },
+            ),
+
+            const Divider(),
+
+            // المساعدة والدعم → الأسئلة الشائعة
+            ListTile(
+              title: const Text('المساعدة والدعم'),
+              trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+              onTap: () {
+                Navigator.pushNamed(context, AppRoutes.faq);
+              },
+            ),
+
+            // التواصل معنا → صفحة الدعم / الاتصال
+            ListTile(
+              title: const Text('التواصل معنا'),
+              trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+              onTap: () {
+                Navigator.pushNamed(context, AppRoutes.contactSupport);
+              },
+            ),
+
+            // تقييم التطبيق (لسه مفيش Route، نعمله حاليًا Dialog بسيط)
+            ListTile(
+              title: const Text('تقييم التطبيق'),
+              trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (_) => AlertDialog(
+                    title: const Text('تقييم التطبيق'),
+                    content: const Text(
+                      'سيتم ربط هذه الخاصية بمتجر التطبيقات لاحقاً.',
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: const Text('حسناً'),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
