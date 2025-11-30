@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:khidma/mock/mock_data.dart';
 import 'package:khidma/models/order.dart';
