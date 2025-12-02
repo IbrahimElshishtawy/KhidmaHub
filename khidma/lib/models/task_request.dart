@@ -1,11 +1,10 @@
-// lib/models/task_request.dart
-
 class TaskRequest {
   final String category;
   final String serviceType;
   final String description;
   final double hourlyPrice;
   final String location;
+  final int hours; // عدد الساعات
 
   TaskRequest({
     required this.category,
@@ -13,5 +12,6 @@ class TaskRequest {
     required this.description,
     required this.hourlyPrice,
     required this.location,
+    required this.hours,
   });
 }
