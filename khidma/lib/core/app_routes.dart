@@ -137,7 +137,7 @@ class AppRoutes {
       case earningsHistory:
         return MaterialPageRoute(builder: (_) => const EarningsHistoryScreen());
       case chats:
-        return MaterialPageRoute(builder: (_) => const ChatListPage());
+        return MaterialPageRoute(builder: (_) => const ChatPage());
       case chatDetail:
         final args = routeSettings.arguments as Map<String, dynamic>;
         final chatId = args['chatId'] as int;
