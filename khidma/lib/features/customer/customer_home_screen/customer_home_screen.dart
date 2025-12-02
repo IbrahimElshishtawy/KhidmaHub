@@ -33,7 +33,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
       body: IndexedStack(
         index: currentIndex, // Display content based on the selected tab
         children: [
-          const ChatListPage(),
+          const ChatPage(),
           const TasksPage(),
           const HomeScreen(),
           const CustomerProfileScreen(),
