@@ -40,18 +40,12 @@ class TrackingPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-
-            // Task Details (e.g., Time Remaining, Estimated Completion)
             _buildTaskDetails(),
 
             const SizedBox(height: 20),
-
-            // Progress Indicator Section
             _buildProgressSection(),
 
             const SizedBox(height: 30),
-
-            // Return to Task Details Button
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
@@ -81,7 +75,6 @@ class TrackingPage extends StatelessWidget {
     );
   }
 
-  // Task Details (e.g., time remaining, estimated completion)
   Widget _buildTaskDetails() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -109,9 +102,7 @@ class TrackingPage extends StatelessWidget {
     );
   }
 
-  // Progress Section
   Widget _buildProgressSection() {
-    // For demonstration, simulate the task completion with a 50% progress bar
     double taskProgress = 0.5;
 
     return Column(
