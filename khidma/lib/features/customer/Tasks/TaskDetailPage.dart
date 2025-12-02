@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use, file_names
 
 import 'package:flutter/material.dart';
+import 'package:khidma/features/customer/Tasks/TrackingPage.dart';
 
 class TaskDetailPage extends StatefulWidget {
   const TaskDetailPage({super.key});
@@ -16,9 +17,10 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color(0xFF3B5998),
+          backgroundColor: const Color.fromARGB(255, 255, 255, 255),
           title: const Text("تفاصيل المهمة"),
           centerTitle: true,
+          elevation: 4,
         ),
 
         body: SingleChildScrollView(
@@ -30,7 +32,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
               Text(
                 "تنظيف المنزل",
                 style: const TextStyle(
-                  fontSize: 22,
+                  fontSize: 24,
                   fontWeight: FontWeight.bold,
                   color: Color(0xFF3B5998),
                 ),
@@ -40,8 +42,8 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
 
               Container(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 6,
+                  horizontal: 14,
+                  vertical: 8,
                 ),
                 decoration: BoxDecoration(
                   color: Colors.green.withOpacity(0.15),
@@ -49,7 +51,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                 ),
                 child: const Text(
                   "قيد التنفيذ",
-                  style: TextStyle(color: Colors.green, fontSize: 14),
+                  style: TextStyle(color: Colors.green, fontSize: 16),
                 ),
               ),
 
@@ -63,7 +65,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                 icon: Icons.description_outlined,
               ),
 
-              const SizedBox(height: 16),
+              const SizedBox(height: 20),
 
               _infoCard(
                 title: "العامل",
@@ -71,7 +73,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                 icon: Icons.person_outline,
               ),
 
-              const SizedBox(height: 16),
+              const SizedBox(height: 20),
 
               _infoCard(
                 title: "العنوان",
@@ -79,7 +81,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                 icon: Icons.location_on_outlined,
               ),
 
-              const SizedBox(height: 16),
+              const SizedBox(height: 20),
 
               _infoCard(
                 title: "موعد التنفيذ",
@@ -94,7 +96,13 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    // TODO: Navigate to tracking page
+                    // Action to track the task
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const TrackingPage(),
+                      ),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF3B5998),
@@ -105,7 +113,11 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                   ),
                   child: const Text(
                     "تتبع المهمة",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
@@ -131,9 +143,9 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
+            color: Colors.black.withOpacity(0.1),
             blurRadius: 8,
-            offset: const Offset(0, 3),
+            offset: const Offset(0, 4),
           ),
         ],
       ),
