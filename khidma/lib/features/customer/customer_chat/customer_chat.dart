@@ -147,7 +147,7 @@ class _ChatPageState extends State<ChatPage> {
 
 class Message {
   final String text;
-  final bool isFromCustomer; // true if the message is from the customer
+  final bool isFromCustomer;
   final String time;
 
   Message({
