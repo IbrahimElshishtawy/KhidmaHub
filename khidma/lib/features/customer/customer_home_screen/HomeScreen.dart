@@ -1,9 +1,7 @@
-// ignore_for_file: file_names
+// ignore_for_file: deprecated_member_use, file_names
 
 import 'package:flutter/material.dart';
 import 'package:khidma/features/customer/customer_home_screen/widget/buildAppBar.dart';
-import 'package:khidma/features/customer/customer_home_screen/widget/buildCategorySection.dart';
-import 'package:khidma/features/customer/customer_home_screen/widget/buildServiceList.dart';
 import 'package:khidma/models/service.dart';
 
 import '../../../mock/mock_data.dart';
@@ -207,8 +205,6 @@ class _CategoryCard extends StatelessWidget {
                 child: Icon(icon, size: 30, color: theme.colorScheme.primary),
               ),
               const SizedBox(width: 14),
-
-              // نص العنوان + الوصف + "ابدأ الآن"
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
