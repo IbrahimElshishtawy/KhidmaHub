@@ -5,7 +5,9 @@ import 'package:khidma/features/customer/customer_home_screen/widget/buildAppBar
 import 'package:khidma/features/customer/customer_home_screen/widget/buildCategorySection.dart';
 import 'package:khidma/features/customer/customer_home_screen/widget/buildServiceList.dart';
 import 'package:khidma/models/service.dart';
+
 import '../../../mock/mock_data.dart';
+import '../../task/create_task_page.dart'; // <- تأكد من المسار الفعلي لصفحة إنشاء المهمة
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -18,14 +20,14 @@ class _HomeScreenState extends State<HomeScreen> {
   int currentIndex = 0;
   bool isSearching = false;
   TextEditingController searchController = TextEditingController();
-  List<Service_model> filteredServices = mockServices
-      .cast<Service_model>(); // List to hold filtered services
+
+  // List to hold filtered services
+  List<Service_model> filteredServices = mockServices.cast<Service_model>();
 
   void _filterServices(String query) {
     setState(() {
       if (query.isEmpty) {
-        filteredServices = mockServices
-            .cast<Service_model>(); // Show all services when query is empty
+        filteredServices = mockServices.cast<Service_model>();
       } else {
         filteredServices = mockServices
             .where(
@@ -38,9 +40,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
             )
             .cast<Service_model>()
-            .toList(); // Filter services based on query
+            .toList();
       }
     });
+  }
+
+  void _openCreateTask(String category) {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (_) => CreateTaskPage(category: category)),
+    );
   }
 
   @override
@@ -51,31 +59,114 @@ class _HomeScreenState extends State<HomeScreen> {
         child: buildAppBar(
           isSearching: isSearching,
           searchController: searchController,
-          onSearchToggle: (bool p1) {
+          onSearchToggle: (bool value) {
             setState(() {
-              isSearching = p1;
+              isSearching = value;
             });
           },
           onSearchChanged: _filterServices,
-          context: context, // Adding the search functionality
+          context: context,
         ),
       ),
       body: GestureDetector(
-        onTap: () => FocusScope.of(
-          context,
-        ).requestFocus(FocusNode()), // Dismiss keyboard when tapping outside
+        onTap: () => FocusScope.of(context).unfocus(),
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              buildCategorySection(),
-              const SizedBox(height: 16),
-              ServiceList(
-                filteredServices: filteredServices, // Pass filtered services
+              // هيدر بسيط
+              const Text(
+                'مرحبا بك 👋',
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
+              const SizedBox(height: 4),
+              const Text(
+                'اختر نوع الخدمة لبدء إنشاء مهمة جديدة',
+                style: TextStyle(fontSize: 14, color: Colors.grey),
+              ),
+              const SizedBox(height: 16),
+
+              /// ====== 3 كروت الفئات الرئيسية (داخلي / خارجي / أخرى) ======
+              Row(
+                children: [
+                  Expanded(
+                    child: _CategoryCard(
+                      title: 'خدمات داخلية',
+                      icon: Icons.home_repair_service_outlined,
+                      onTap: () => _openCreateTask('خدمات داخلية'),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: _CategoryCard(
+                      title: 'خدمات خارجية',
+                      icon: Icons.directions_walk_outlined,
+                      onTap: () => _openCreateTask('خدمات خارجية'),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: _CategoryCard(
+                      title: 'أخرى',
+                      icon: Icons.more_horiz_outlined,
+                      onTap: () => _openCreateTask('أخرى'),
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 24),
+
+              /// ====== سيكشن الكاتيجوريز (لو عندك UI إضافي في buildCategorySection) ======
+              buildCategorySection(),
+
+              const SizedBox(height: 16),
+
+              /// ====== قائمة الخدمات (مع الفلترة) ======
+              ServiceList(filteredServices: filteredServices),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+/// كارت للفئات الرئيسية في الهوم
+class _CategoryCard extends StatelessWidget {
+  final String title;
+  final IconData icon;
+  final VoidCallback onTap;
+
+  const _CategoryCard({
+    required this.title,
+    required this.icon,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(16),
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          color: Theme.of(context).colorScheme.primary.withOpacity(0.06),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, size: 24),
+            const SizedBox(height: 8),
+            Text(
+              title,
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+            ),
+          ],
         ),
       ),
     );
