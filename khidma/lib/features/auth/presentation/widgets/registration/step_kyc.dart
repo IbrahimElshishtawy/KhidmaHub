@@ -18,6 +18,8 @@ class StepKyc extends StatelessWidget {
     );
 
     if (result != null && result.files.single.path != null) {
+      if (!context.mounted) return;
+      
       context.read<RegisterBloc>().add(
             RegisterFilePicked(
               file: File(result.files.single.path!),
