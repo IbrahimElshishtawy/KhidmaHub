@@ -20,10 +20,12 @@ import 'package:khidma/features/customer/order/OrderHistoryPage.dart';
 import 'package:khidma/features/customer/payment_screen.dart';
 import 'package:khidma/features/customer/rating_payment/rating_payment_screen.dart';
 
-import '../features/auth/onboarding_screen.dart';
+import '../features/auth/onboarding_screen.dart' as legacy_onboarding;
 import '../features/auth/role_selection_screen.dart';
 import '../features/auth/customer_login_screen/customer_login_screen.dart';
 import '../features/auth/helper_login_screen/helper_login_screen.dart';
+import '../features/auth/presentation/pages/onboarding_screen.dart' as new_onboarding;
+import '../features/auth/presentation/pages/login_screen.dart';
 
 import '../features/customer/customer_home_screen/customer_home_screen.dart';
 import '../features/customer/order/service_details_screen.dart';
@@ -43,6 +45,7 @@ class AppRoutes {
   static const String roleSelection = '/role-selection';
   static const String customerLogin = '/customer-login';
   static const String helperLogin = '/helper-login';
+  static const String login = '/login';
 
   static const String customerHome = '/customer-home';
   static const String serviceDetails = '/service-details';
@@ -84,7 +87,10 @@ class AppRoutes {
   static Route<dynamic> generateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
       case onboarding:
-        return MaterialPageRoute(builder: (_) => const OnboardingScreen());
+        return MaterialPageRoute(builder: (_) => const new_onboarding.OnboardingScreen());
+
+      case login:
+        return MaterialPageRoute(builder: (_) => const LoginScreen());
 
       case home:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
@@ -183,7 +189,7 @@ class AppRoutes {
       case taskDetail:
         return MaterialPageRoute(builder: (_) => const TaskDetailPage());
       default:
-        return MaterialPageRoute(builder: (_) => const OnboardingScreen());
+        return MaterialPageRoute(builder: (_) => const new_onboarding.OnboardingScreen());
     }
   }
 }
